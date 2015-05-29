@@ -1,0 +1,9 @@
+[cartodb]
+account_name={account name}
+api_key={API key}
+import_api_endpoint=https://{account name}.cartodb.com/api/v1/imports/
+table_name=pepsicoca
+
+[intervals]
+run_after_s=600
+clean_older_than_d=30

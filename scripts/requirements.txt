@@ -1,0 +1,2 @@
+-e git+ssh://git@github.com/CartoDB/powertrack.git@0.1.2#egg=powertrack
+cartodb==0.8.1
