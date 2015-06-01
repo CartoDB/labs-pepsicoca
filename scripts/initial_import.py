@@ -21,11 +21,13 @@ categories = [["#pepsi"], ["#cocacola"]]
 start_timestamp = datetime.utcnow() - timedelta(days=int(CLEAN_OLDER_THAN_D))
 end_timestamp = datetime.utcnow()
 
+table_name = TABLE_NAME
+
 for i, category in enumerate(categories):
-    new_job = p.jobs.create(start_timestamp, end_timestamp, TABLE_NAME, category)
+    new_job = p.jobs.create(start_timestamp, end_timestamp, table_name, category)
     new_job.export_tweets(category=i + 1, append=False if i == 0 else True)
 
-files = {'file': open(TABLE_NAME + '.csv', 'rb')}
+files = {'file': open(table_name + '.csv', 'rb')}
 
 r = requests.post(IMPORT_API_ENDPOINT, files=files, params={"api_key": API_KEY})
 response_data = r.json()
@@ -41,10 +43,11 @@ while state != "complete" and state != "failure":
     print response_data
 
 if state == "complete":
-    with open("{table_name}_next.conf".format(table_name=TABLE_NAME), "w") as conf:
+    table_name = response_data["table_name"]  # Just in case it changed during import
+    with open("{table_name}_next.conf".format(table_name=table_name), "w") as conf:
         conf.write(json.dumps({"start_timestamp": end_timestamp.strftime("%Y%m%d%H%M%S")}))
 
 try:
-    os.remove(TABLE_NAME + '.csv')
+    os.remove(table_name + '.csv')
 except OSError:
     pass
