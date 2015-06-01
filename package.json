@@ -1,0 +1,13 @@
+{
+  "name": "labs-pepsicoca",
+  "author": "Daniel Carrion <daniel@cartodb.com>",
+  "description": "Real-time Twitter with CartoDB",
+  "version" : "0.0.1",
+  "repository": {
+        "type": "git",
+        "url": "https://github.com/CartoDB/labs-pepsicoca.git"
+    },
+  "dependencies": {
+    "http-server": "~0.7.4"
+  }
+}
