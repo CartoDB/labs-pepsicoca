@@ -73,7 +73,7 @@ while 1:
 
     beginning = datetime.now() - timedelta(days=int(CLEAN_OLDER_THAN_D))
     try:
-        print cl.sql("DELETE FROM %s WHERE postedtime <= '%s'" % (tmp_table_name, beginning.strftime("%Y-%m-%d %H:%M:%S")))
+        print cl.sql("DELETE FROM %s WHERE postedtime <= '%s'" % (TABLE_NAME, beginning.strftime("%Y-%m-%d %H:%M:%S")))
     except CartoDBException as e:
         pass
 
