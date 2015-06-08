@@ -58,10 +58,14 @@ while 1:
     item_queue_id = response_data["item_queue_id"]
     while state != "complete" and state != "failure":
         time.sleep(5)
-        r = requests.get(IMPORT_API_ENDPOINT + item_queue_id, params={"api_key": API_KEY})
-        response_data = r.json()
-        state = response_data["state"]
-        print response_data
+        try:
+            r = requests.get(IMPORT_API_ENDPOINT + item_queue_id, params={"api_key": API_KEY})
+        except ValueError:
+            continue
+        else:
+            response_data = r.json()
+            state = response_data["state"]
+            print response_data
 
     if state == "failure":
         continue
