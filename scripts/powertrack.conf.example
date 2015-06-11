@@ -1,0 +1,9 @@
+[credentials]
+account_name=abcd
+username=abcd@abcd.com
+password=qwerty
+label=mygniplabel
+
+[output]
+folder=/tmp
+num_threads=10
