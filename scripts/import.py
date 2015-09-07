@@ -81,7 +81,7 @@ while 1:
     except CartoDBException as e:
         pass
 
-    # 3) Append new data from temp table to real table
+    # 3) Append new data from temp table to master table
 
     try:
         print cl.sql("INSERT INTO {account_name}.{table_name} (actor_displayname,actor_followerscount,actor_friendscount,"
@@ -101,11 +101,10 @@ while 1:
                      "twitter_filter_level,twitter_lang,verb,nextval('{table_name}_cartodb_id_seq') as cartodb_id "
                      "FROM {account_name}.{tmp_table_name}".format(table_name=TABLE_NAME, tmp_table_name=tmp_table_name, account_name=ACCOUNT_NAME))
     except CartoDBException as e:
-        print ("some error ocurred", e)
-        continue
-
-    with open("{table_name}_next.conf".format(table_name=TABLE_NAME), "w") as conf:
-        conf.write(json.dumps({"start_timestamp": end_timestamp.strftime("%Y%m%d%H%M%S")}))
+        print ("Data couldn't be appended to master table", e)
+    else:  # Save last timestamp
+        with open("{table_name}_next.conf".format(table_name=TABLE_NAME), "w") as conf:
+            conf.write(json.dumps({"start_timestamp": end_timestamp.strftime("%Y%m%d%H%M%S")}))
 
     # 4) Delete temporary table
 
